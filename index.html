@@ -408,30 +408,42 @@
   <!-- 1. AUTHENTICATION PAGE (LOGIN & REGISTRATION)                  -->
   <!-- ============================================================== -->
   <div id="auth-screen" class="w-full max-w-md my-auto p-4 flex flex-col justify-center animate-view-enter">
-    <div class="bg-white/95 backdrop-blur-2xl rounded-[32px] shadow-[0_25px_60px_-15px_rgba(0,0,0,0.5),0_0_0_1px_rgba(255,255,255,0.7)] p-6 sm:p-8 border border-slate-200/80 relative overflow-hidden">
+    <div class="bg-white/95 backdrop-blur-2xl rounded-[32px] shadow-[0_25px_60px_-15px_rgba(0,0,0,0.5),0_0_0_1px_rgba(255,255,255,0.7)] p-6 sm:p-7 border border-slate-200/80 relative overflow-hidden">
       
       <!-- Top Decorative Ambient Glow Ribbon -->
       <div class="h-2 bg-gradient-to-r from-emerald-500 via-teal-400 to-cyan-500 absolute top-0 left-0 right-0"></div>
 
       <!-- App Branding / Header -->
-      <div class="text-center mb-6 pt-2">
-        <div class="inline-flex items-center justify-center w-14 h-14 rounded-2xl bg-gradient-to-tr from-emerald-600 via-teal-600 to-cyan-500 text-white shadow-xl shadow-emerald-500/25 mb-3 ring-4 ring-emerald-500/10">
-          <svg class="w-7 h-7" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
+      <div class="text-center mb-4 pt-1">
+        <div class="inline-flex items-center justify-center w-12 h-12 rounded-2xl bg-gradient-to-tr from-emerald-600 via-teal-600 to-cyan-500 text-white shadow-xl shadow-emerald-500/25 mb-2 ring-4 ring-emerald-500/10">
+          <svg class="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
             <path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
           </svg>
         </div>
         <h1 class="text-2xl font-black tracking-tight text-slate-900 brand-font flex items-center justify-center gap-1">
           Livax<span class="text-emerald-600">Track</span>
         </h1>
-        <p class="text-xs font-semibold text-slate-600 mt-1">Mobile Livestock Vaccination Monitoring System</p>
-        <p class="text-[11px] text-slate-400 mt-0.5 font-medium flex items-center justify-center gap-1.5">
+        <p class="text-xs font-semibold text-slate-600">Mobile Livestock Vaccination Monitoring System</p>
+        <p class="text-[10px] text-slate-400 mt-0.5 font-medium flex items-center justify-center gap-1.5">
           <span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
           <span>Western Leyte College (WLC) Ormoc City — BSIT 3102</span>
         </p>
       </div>
 
+      <!-- SEGMENTED AUTH MODE SWITCHER (Sign In vs Register) -->
+      <div class="flex items-center p-1 rounded-2xl bg-slate-100/90 border border-slate-200/80 mb-4 shadow-inner">
+        <button type="button" onclick="setAuthMode('login')" id="btn-tab-login" class="flex-1 py-2 rounded-xl text-xs font-bold transition-all bg-white text-emerald-800 shadow-xs flex items-center justify-center gap-1.5">
+          <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4M10 17l5-5-5-5M15 12H3"/></svg>
+          <span>Sign In</span>
+        </button>
+        <button type="button" onclick="setAuthMode('register')" id="btn-tab-register" class="flex-1 py-2 rounded-xl text-xs font-medium transition-all text-slate-500 hover:text-slate-800 flex items-center justify-center gap-1.5">
+          <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="8.5" cy="7" r="4"></circle><line x1="20" y1="8" x2="20" y2="14"></line><line x1="23" y1="11" x2="17" y2="11"></line></svg>
+          <span>Register</span>
+        </button>
+      </div>
+
       <!-- INCREASING LOCKOUT BANNER (IAS Requirement) -->
-      <div id="lockout-banner" class="hidden mb-4 p-3.5 rounded-2xl bg-red-50 border border-red-200 text-red-800 text-xs text-center font-medium shadow-sm animate-pulse">
+      <div id="lockout-banner" class="hidden mb-4 p-3 rounded-2xl bg-red-50 border border-red-200 text-red-800 text-xs text-center font-medium shadow-sm animate-pulse">
         <div class="font-bold flex items-center justify-center gap-1.5 text-red-700 mb-0.5">
           <span>🛡️</span> Security Account Lockout Active
         </div>
@@ -440,100 +452,155 @@
       </div>
 
       <!-- CAPTCHA CHALLENGE (IAS Requirement) -->
-      <div id="captcha-container" class="hidden mb-4 p-3.5 bg-slate-50 border border-slate-200/90 rounded-2xl space-y-2">
+      <div id="captcha-container" class="hidden mb-4 p-3 bg-slate-50 border border-slate-200/90 rounded-2xl space-y-2">
         <div class="flex items-center justify-between">
           <span class="text-[11px] font-bold text-slate-700">Security Human Verification</span>
           <button type="button" onclick="generateCaptcha()" class="text-[10px] text-emerald-700 font-bold hover:underline">Refresh</button>
         </div>
         <div class="flex items-center gap-2">
-          <div id="captcha-display" class="px-4 py-2 bg-slate-200/80 text-slate-800 font-mono tracking-widest font-black text-sm rounded-xl select-none line-through italic border border-slate-300"></div>
-          <input type="text" id="captcha-input" placeholder="Enter code" class="flex-1 px-3 py-2 border border-slate-200 rounded-xl text-xs font-mono outline-none focus:border-emerald-500 focus:ring-2 focus:ring-emerald-500/10" />
+          <div id="captcha-display" class="px-4 py-1.5 bg-slate-200/80 text-slate-800 font-mono tracking-widest font-black text-sm rounded-xl select-none line-through italic border border-slate-300"></div>
+          <input type="text" id="captcha-input" placeholder="Enter code" class="flex-1 px-3 py-1.5 border border-slate-200 rounded-xl text-xs font-mono outline-none focus:border-emerald-500 focus:ring-2 focus:ring-emerald-500/10" />
         </div>
       </div>
 
-      <!-- LOGIN FORM -->
-      <form id="login-form" onsubmit="handleLogin(event)" class="space-y-4">
-        <div>
-          <label class="block text-xs font-bold text-slate-700 mb-1.5">Username or Email</label>
-          <div class="relative">
-            <input type="text" id="login-identifier" required autocomplete="username" class="w-full pl-10 pr-4 py-3 rounded-2xl bg-slate-50/80 hover:bg-slate-50 focus:bg-white border border-slate-200 focus:border-emerald-500 focus:ring-4 focus:ring-emerald-500/10 text-xs font-medium text-slate-900 placeholder:text-slate-400 outline-none transition-all duration-200" placeholder="Enter username or email" />
-            <div class="absolute left-3.5 top-3.5 text-slate-400 pointer-events-none">
-              <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+      <!-- 1. SIGN IN SECTION (Visible by default) -->
+      <div id="auth-login-section" class="space-y-4">
+        <form id="login-form" onsubmit="handleLogin(event)" class="space-y-3.5">
+          <div>
+            <label class="block text-xs font-bold text-slate-700 mb-1">Username or Email</label>
+            <div class="relative">
+              <input type="text" id="login-identifier" required autocomplete="username" class="w-full pl-10 pr-4 py-2.5 rounded-2xl bg-slate-50/80 hover:bg-slate-50 focus:bg-white border border-slate-200 focus:border-emerald-500 focus:ring-4 focus:ring-emerald-500/10 text-xs font-medium text-slate-900 placeholder:text-slate-400 outline-none transition-all duration-200" placeholder="Enter username or email" />
+              <div class="absolute left-3.5 top-3 text-slate-400 pointer-events-none">
+                <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+              </div>
             </div>
           </div>
-        </div>
 
-        <div>
-          <label class="block text-xs font-bold text-slate-700 mb-1.5">Password</label>
-          <div class="relative">
-            <input type="password" id="login-password" required autocomplete="current-password" class="w-full pl-10 pr-12 py-3 rounded-2xl bg-slate-50/80 hover:bg-slate-50 focus:bg-white border border-slate-200 focus:border-emerald-500 focus:ring-4 focus:ring-emerald-500/10 text-xs font-medium text-slate-900 placeholder:text-slate-400 outline-none transition-all duration-200" placeholder="••••••••" />
-            <div class="absolute left-3.5 top-3.5 text-slate-400 pointer-events-none">
-              <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
+          <div>
+            <label class="block text-xs font-bold text-slate-700 mb-1">Password</label>
+            <div class="relative">
+              <input type="password" id="login-password" required autocomplete="current-password" class="w-full pl-10 pr-12 py-2.5 rounded-2xl bg-slate-50/80 hover:bg-slate-50 focus:bg-white border border-slate-200 focus:border-emerald-500 focus:ring-4 focus:ring-emerald-500/10 text-xs font-medium text-slate-900 placeholder:text-slate-400 outline-none transition-all duration-200" placeholder="••••••••" />
+              <div class="absolute left-3.5 top-3 text-slate-400 pointer-events-none">
+                <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
+              </div>
+              <button type="button" onclick="togglePasswordVisibility('login-password', this)" class="absolute right-3.5 top-2.5 text-slate-400 hover:text-slate-700 transition p-0.5" title="Toggle password visibility">
+                <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+              </button>
             </div>
-            <button type="button" onclick="togglePasswordVisibility('login-password', this)" class="absolute right-3.5 top-3 text-slate-400 hover:text-slate-700 transition p-0.5" title="Toggle password visibility">
-              <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
-            </button>
+            <div class="flex justify-between items-center mt-1.5 text-[11px]">
+              <span id="attempt-counter" class="text-slate-500 font-medium">Attempts remaining: <span class="font-bold text-slate-800">3</span></span>
+              <button type="button" onclick="openForgotModal()" class="text-emerald-700 hover:text-emerald-800 font-bold hover:underline transition">Forgot Password?</button>
+            </div>
           </div>
-          <div class="flex justify-between items-center mt-2 text-[11px]">
-            <span id="attempt-counter" class="text-slate-500 font-medium">Attempts remaining: <span class="font-bold text-slate-800">3</span></span>
-            <button type="button" onclick="openForgotModal()" class="text-emerald-700 hover:text-emerald-800 font-bold hover:underline transition">Forgot Password?</button>
-          </div>
+
+          <button type="submit" id="btn-login-submit" class="btn-shimmer-wrap w-full py-3.5 px-6 rounded-2xl bg-gradient-to-r from-emerald-600 via-teal-600 to-cyan-600 hover:from-emerald-500 hover:to-teal-500 active:scale-[0.98] text-white font-bold text-xs tracking-wider uppercase shadow-xl shadow-emerald-600/25 transition-all duration-200 flex items-center justify-center gap-2 group">
+            <span id="login-spinner" class="hidden animate-spin h-3.5 w-3.5 border-2 border-white border-t-transparent rounded-full"></span>
+            <span>Sign In to Account</span>
+            <svg class="w-4 h-4 transform group-hover:translate-x-1 transition-transform" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          </button>
+        </form>
+
+        <div class="text-center pt-1 border-t border-slate-100">
+          <p class="text-xs text-slate-500 font-medium">
+            Don't have an account yet? 
+            <button type="button" onclick="setAuthMode('register')" class="font-bold text-emerald-700 hover:text-emerald-800 hover:underline ml-1">Register Here</button>
+          </p>
         </div>
-
-        <!-- Sleek Primary Submit Button (Merged Clean Classes) -->
-        <button type="submit" id="btn-login-submit" class="btn-shimmer-wrap w-full py-3.5 px-6 rounded-2xl bg-gradient-to-r from-emerald-600 via-teal-600 to-cyan-600 hover:from-emerald-500 hover:to-teal-500 active:scale-[0.98] text-white font-bold text-xs tracking-wider uppercase shadow-xl shadow-emerald-600/25 transition-all duration-200 flex items-center justify-center gap-2 group">
-          <span id="login-spinner" class="hidden animate-spin h-3.5 w-3.5 border-2 border-white border-t-transparent rounded-full"></span>
-          <span>Sign In to Account</span>
-          <svg class="w-4 h-4 transform group-hover:translate-x-1 transition-transform" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-        </button>
-      </form>
-
-      <!-- REGISTRATION ACCORDION TOGGLE -->
-      <div class="mt-4 pt-3 border-t border-slate-100 text-center">
-        <button onclick="toggleRegisterSection()" class="text-xs font-semibold text-emerald-800 hover:text-emerald-900 hover:underline flex items-center justify-center gap-1.5 mx-auto">
-          <span id="reg-toggle-text">Don't have an account? Register Here</span>
-          <span id="reg-toggle-icon" class="text-[10px] transition-transform">▾</span>
-        </button>
       </div>
 
-      <!-- REGISTRATION FORM ACCORDION -->
-      <form id="register-form" onsubmit="handleRegister(event)" class="hidden mt-3 space-y-3 pt-3 border-t border-dashed border-slate-200">
-        <div class="flex items-center justify-between mb-1">
-          <h4 class="text-xs font-bold uppercase tracking-wider text-slate-500">Create New Account</h4>
+      <!-- 2. REGISTER SECTION (Clean, isolated, and compact) -->
+      <div id="auth-register-section" class="hidden space-y-3">
+        <div class="flex items-center justify-between pb-1 border-b border-slate-100">
+          <span class="text-xs font-bold uppercase tracking-wider text-slate-700 flex items-center gap-1.5">
+            <span class="w-2 h-2 rounded-full bg-emerald-500"></span>
+            <span>Create New User Account</span>
+          </span>
           <span class="text-[10px] text-emerald-700 font-bold bg-emerald-50 px-2 py-0.5 rounded-full border border-emerald-200">OTP Verified</span>
         </div>
 
-        <div>
-          <input type="text" id="reg-name" placeholder="Full Name (e.g., Juan Dela Cruz)" required class="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-xs outline-none focus:bg-white focus:border-emerald-500 focus:ring-2 focus:ring-emerald-500/10" />
-        </div>
-        <div class="grid grid-cols-2 gap-2">
-          <input type="text" id="reg-username" placeholder="Username" required class="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-xs outline-none focus:bg-white focus:border-emerald-500 focus:ring-2 focus:ring-emerald-500/10" />
-          <select id="reg-role" class="w-full px-2.5 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-xs text-slate-700 outline-none focus:bg-white focus:border-emerald-500 focus:ring-2 focus:ring-emerald-500/10">
-            <option value="farmer">Farmer (Mobile UI)</option>
-            <option value="staff">Vet Staff (Mobile UI)</option>
-          </select>
-        </div>
-        <div>
-          <input type="email" id="reg-email" placeholder="Valid Email Address" required class="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-xs outline-none focus:bg-white focus:border-emerald-500 focus:ring-2 focus:ring-emerald-500/10" />
-        </div>
-        <div>
-          <div class="relative">
-            <input type="password" id="reg-password" oninput="evaluatePasswordStrength(this.value, 'reg-strength')" placeholder="Password (Min 8 chars, mixed case, symbol)" required class="w-full pl-3.5 pr-14 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-xs outline-none focus:bg-white focus:border-emerald-500 focus:ring-2 focus:ring-emerald-500/10" />
-            <button type="button" onclick="togglePasswordVisibility('reg-password', this)" class="absolute right-3 top-2.5 text-[10px] text-slate-400 font-semibold hover:text-slate-700">Show</button>
+        <form id="register-form" onsubmit="handleRegister(event)" class="space-y-2.5">
+          <!-- Full Name -->
+          <div>
+            <label class="block text-[11px] font-bold text-slate-700 mb-1">Full Name</label>
+            <div class="relative">
+              <input type="text" id="reg-name" placeholder="e.g., Juan Dela Cruz" required class="w-full pl-9 pr-3 py-2 bg-slate-50/80 hover:bg-slate-50 focus:bg-white border border-slate-200 focus:border-emerald-500 focus:ring-2 focus:ring-emerald-500/10 rounded-xl text-xs font-medium text-slate-900 outline-none transition" />
+              <div class="absolute left-3 top-2.5 text-slate-400 pointer-events-none">
+                <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+              </div>
+            </div>
           </div>
-          <div id="reg-strength" class="mt-1 text-[10px] text-slate-500"></div>
-        </div>
-        <div>
-          <input type="password" id="reg-confirm-password" placeholder="Confirm Password" required class="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-xs outline-none focus:bg-white focus:border-emerald-500 focus:ring-2 focus:ring-emerald-500/10" />
-        </div>
 
-        <button type="submit" id="btn-register-submit" class="btn-shimmer-wrap w-full py-3 bg-gradient-to-r from-emerald-600 to-teal-600 text-white font-bold text-xs rounded-xl hover:from-emerald-500 hover:to-teal-500 transition shadow-md shadow-emerald-600/20 flex items-center justify-center gap-2">
-          <span>Verify via OTP & Create Account</span>
-        </button>
-      </form>
+          <!-- Username & Role -->
+          <div class="grid grid-cols-2 gap-2">
+            <div>
+              <label class="block text-[11px] font-bold text-slate-700 mb-1">Username</label>
+              <div class="relative">
+                <input type="text" id="reg-username" placeholder="Username" required class="w-full pl-8 pr-2.5 py-2 bg-slate-50/80 hover:bg-slate-50 focus:bg-white border border-slate-200 focus:border-emerald-500 focus:ring-2 focus:ring-emerald-500/10 rounded-xl text-xs font-medium text-slate-900 outline-none transition" />
+                <span class="absolute left-2.5 top-2.5 text-slate-400 text-xs font-bold font-mono">@</span>
+              </div>
+            </div>
+            <div>
+              <label class="block text-[11px] font-bold text-slate-700 mb-1">Assigned Role</label>
+              <select id="reg-role" class="w-full px-2.5 py-2 bg-slate-50 border border-slate-200 rounded-xl text-xs font-semibold text-slate-800 outline-none focus:bg-white focus:border-emerald-500 focus:ring-2 focus:ring-emerald-500/10">
+                <option value="farmer">Farmer (Mobile UI)</option>
+                <option value="staff">Vet Staff (Mobile UI)</option>
+              </select>
+            </div>
+          </div>
 
-      <!-- AESTHETIC QUICK-FILL DEMO ACCOUNTS -->
-      <div class="mt-5 p-3.5 rounded-2xl bg-gradient-to-b from-slate-50 to-slate-100/70 border border-slate-200/80 space-y-2.5">
+          <!-- Email -->
+          <div>
+            <label class="block text-[11px] font-bold text-slate-700 mb-1">Email Address (for OTP Verification)</label>
+            <div class="relative">
+              <input type="email" id="reg-email" placeholder="name@domain.com" required class="w-full pl-9 pr-3 py-2 bg-slate-50/80 hover:bg-slate-50 focus:bg-white border border-slate-200 focus:border-emerald-500 focus:ring-2 focus:ring-emerald-500/10 rounded-xl text-xs font-medium text-slate-900 outline-none transition" />
+              <div class="absolute left-3 top-2.5 text-slate-400 pointer-events-none">
+                <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
+              </div>
+            </div>
+          </div>
+
+          <!-- Password with IAS Strength Evaluator -->
+          <div>
+            <label class="block text-[11px] font-bold text-slate-700 mb-1">Password</label>
+            <div class="relative">
+              <input type="password" id="reg-password" oninput="evaluatePasswordStrength(this.value, 'reg-strength')" placeholder="Min 8 chars (A-Z, a-z, 0-9, symbol)" required class="w-full pl-9 pr-12 py-2 bg-slate-50/80 hover:bg-slate-50 focus:bg-white border border-slate-200 focus:border-emerald-500 focus:ring-2 focus:ring-emerald-500/10 rounded-xl text-xs font-medium text-slate-900 outline-none transition" />
+              <div class="absolute left-3 top-2.5 text-slate-400 pointer-events-none">
+                <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
+              </div>
+              <button type="button" onclick="togglePasswordVisibility('reg-password', this)" class="absolute right-3 top-2 text-slate-400 hover:text-slate-700 transition p-0.5">
+                <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+              </button>
+            </div>
+            <div id="reg-strength" class="mt-1 text-[10px] text-slate-500"></div>
+          </div>
+
+          <!-- Confirm Password -->
+          <div>
+            <label class="block text-[11px] font-bold text-slate-700 mb-1">Confirm Password</label>
+            <div class="relative">
+              <input type="password" id="reg-confirm-password" placeholder="Re-enter password to confirm" required class="w-full pl-9 pr-3 py-2 bg-slate-50/80 hover:bg-slate-50 focus:bg-white border border-slate-200 focus:border-emerald-500 focus:ring-2 focus:ring-emerald-500/10 rounded-xl text-xs font-medium text-slate-900 outline-none transition" />
+              <div class="absolute left-3 top-2.5 text-slate-400 pointer-events-none">
+                <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
+              </div>
+            </div>
+          </div>
+
+          <button type="submit" id="btn-register-submit" class="btn-shimmer-wrap w-full py-3 rounded-2xl bg-gradient-to-r from-emerald-600 via-teal-600 to-cyan-600 text-white font-bold text-xs tracking-wider uppercase hover:from-emerald-500 hover:to-teal-500 transition-all shadow-xl shadow-emerald-600/25 active:scale-[0.98] flex items-center justify-center gap-2">
+            <span>Verify via OTP & Create Account</span>
+            <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          </button>
+        </form>
+
+        <div class="text-center pt-2 border-t border-slate-100">
+          <p class="text-xs text-slate-500 font-medium">
+            Already have an account? 
+            <button type="button" onclick="setAuthMode('login')" class="font-bold text-emerald-700 hover:text-emerald-800 hover:underline ml-1">Sign In</button>
+          </p>
+        </div>
+      </div>
+
+      <!-- 3. QUICK-FILL DEMO ACCOUNTS (Shown on Login view) -->
+      <div id="auth-demo-section" class="mt-4 p-3 rounded-2xl bg-gradient-to-b from-slate-50 to-slate-100/70 border border-slate-200/80 space-y-2">
         <div class="flex items-center justify-between">
           <span class="text-[11px] font-bold text-slate-700 flex items-center gap-1.5">
             <span class="text-amber-500 font-normal">⚡</span> Quick Demo Logins
@@ -543,20 +610,20 @@
         
         <div class="grid grid-cols-3 gap-2">
           <!-- Farmer -->
-          <button type="button" onclick="fillDemo('farmer')" class="p-2.5 rounded-xl bg-white hover:bg-emerald-50/90 border border-slate-200 hover:border-emerald-300 text-center transition-all group shadow-xs">
-            <div class="text-lg mb-0.5 group-hover:scale-110 transition-transform">👨‍🌾</div>
+          <button type="button" onclick="fillDemo('farmer')" class="p-2 rounded-xl bg-white hover:bg-emerald-50/90 border border-slate-200 hover:border-emerald-300 text-center transition-all group shadow-xs">
+            <div class="text-base mb-0.5 group-hover:scale-110 transition-transform">👨‍🌾</div>
             <div class="text-[10px] font-bold text-slate-800">Farmer</div>
             <div class="text-[9px] text-emerald-700 font-mono truncate">farmer_juan</div>
           </button>
           <!-- Vet Staff -->
-          <button type="button" onclick="fillDemo('staff')" class="p-2.5 rounded-xl bg-white hover:bg-teal-50/90 border border-slate-200 hover:border-teal-300 text-center transition-all group shadow-xs">
-            <div class="text-lg mb-0.5 group-hover:scale-110 transition-transform">🩺</div>
+          <button type="button" onclick="fillDemo('staff')" class="p-2 rounded-xl bg-white hover:bg-teal-50/90 border border-slate-200 hover:border-teal-300 text-center transition-all group shadow-xs">
+            <div class="text-base mb-0.5 group-hover:scale-110 transition-transform">🩺</div>
             <div class="text-[10px] font-bold text-slate-800">Vet Staff</div>
             <div class="text-[9px] text-teal-700 font-mono truncate">vet_staff</div>
           </button>
           <!-- Admin -->
-          <button type="button" onclick="fillDemo('admin')" class="p-2.5 rounded-xl bg-white hover:bg-purple-50/90 border border-slate-200 hover:border-purple-300 text-center transition-all group shadow-xs">
-            <div class="text-lg mb-0.5 group-hover:scale-110 transition-transform">🛡️</div>
+          <button type="button" onclick="fillDemo('admin')" class="p-2 rounded-xl bg-white hover:bg-purple-50/90 border border-slate-200 hover:border-purple-300 text-center transition-all group shadow-xs">
+            <div class="text-base mb-0.5 group-hover:scale-110 transition-transform">🛡️</div>
             <div class="text-[10px] font-bold text-slate-800">Admin</div>
             <div class="text-[9px] text-purple-700 font-mono truncate">admin_user</div>
           </button>
@@ -564,7 +631,7 @@
       </div>
 
       <!-- LOCAL STORAGE STATUS BADGE -->
-      <div class="mt-3.5 text-center">
+      <div class="mt-3 text-center">
         <span class="inline-flex items-center gap-2 text-[10px] text-emerald-700 bg-emerald-50/90 px-3.5 py-1 rounded-full font-semibold border border-emerald-200 shadow-xs">
           <span class="relative flex h-2 w-2">
             <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
@@ -2244,6 +2311,66 @@
       return Array.from(new Uint8Array(buffer)).map(b => b.toString(16).padStart(2, '0')).join('');
     }
 
+    
+    /* ========================================================
+       LIVE SUPABASE CLOUD REST CLIENT CONFIGURATION
+       Project: https://uugfvxcykjbnjiwcgcfl.supabase.co
+       ======================================================== */
+    const SUPABASE_URL = 'https://uugfvxcykjbnjiwcgcfl.supabase.co';
+    const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InV1Z2Z2eGN5a2pibmppd2NnY2ZsIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTMwNjQyMjMsImV4cCI6MjEwODY0MDIyM30.UlnKy5A8G2MfU1javCcUfAP2oMQXg5yFc-lzvsTwdYk';
+
+    async function supabaseFetch(endpoint, method = 'GET', body = null) {
+      const url = `${SUPABASE_URL}/rest/v1/${endpoint}`;
+      const headers = {
+        'apikey': SUPABASE_ANON_KEY,
+        'Authorization': `Bearer ${SUPABASE_ANON_KEY}`,
+        'Content-Type': 'application/json'
+      };
+
+      if (method === 'POST' || method === 'PATCH') {
+        headers['Prefer'] = 'return=representation';
+      }
+
+      const options = {
+        method,
+        headers
+      };
+
+      if (body) {
+        options.body = JSON.stringify(body);
+      }
+
+      const response = await fetch(url, options);
+      if (!response.ok) {
+        let errMsg = `Supabase HTTP ${response.status}`;
+        try {
+          const errJson = await response.json();
+          errMsg = errJson.message || errJson.details || errJson.hint || errMsg;
+        } catch(e) {}
+        throw new Error(errMsg);
+      }
+
+      const text = await response.text();
+      return text ? JSON.parse(text) : [];
+    }
+
+    async function syncWithSupabase() {
+      try {
+        const supaUsers = await supabaseFetch('app_users?select=*');
+        if (Array.isArray(supaUsers) && supaUsers.length > 0) {
+          supaUsers.forEach(rem => {
+            const idx = localUsers.findIndex(u => u.id === rem.id || u.username === rem.username);
+            if (idx !== -1) localUsers[idx] = rem;
+            else localUsers.push(rem);
+          });
+          persistLocal();
+          console.log('✓ Synchronized app_users from Supabase Cloud:', supaUsers.length);
+        }
+      } catch(e) {
+        console.warn('Initial Supabase sync:', e.message);
+      }
+    }
+
     // Unified Offline-First Database Service
     async function dbService(endpoint, method = 'GET', body = null) {
       // 1. Always attempt Supabase Cloud first
@@ -2259,10 +2386,11 @@
               else localUsers.push(rem);
             });
             persistLocal();
-          } else if (method === 'PATCH' && Array.isArray(remoteRes) && remoteRes.length > 0) {
-            const updated = remoteRes[0];
-            const idx = localUsers.findIndex(u => u.id === updated.id || u.username === updated.username);
-            if (idx !== -1) localUsers[idx] = updated;
+          } else if ((method === 'POST' || method === 'PATCH') && Array.isArray(remoteRes) && remoteRes.length > 0) {
+            const inserted = remoteRes[0];
+            const idx = localUsers.findIndex(u => u.id === inserted.id || u.username === inserted.username);
+            if (idx !== -1) localUsers[idx] = inserted;
+            else localUsers.push(inserted);
             persistLocal();
           }
         }
@@ -2509,22 +2637,57 @@
     }
 
     // Toggle Registration Form
-    function toggleRegisterSection() {
-      const form = document.getElementById('register-form');
-      const text = document.getElementById('reg-toggle-text');
-      const icon = document.getElementById('reg-toggle-icon');
-      if (form.classList.contains('hidden')) {
-        form.classList.remove('hidden');
-        text.innerText = 'Already have an account? Sign In';
-        icon.innerText = '▴';
+    function setAuthMode(mode) {
+      if (typeof SoundFX !== 'undefined') SoundFX.tabSwitch();
+      const loginSection = document.getElementById('auth-login-section');
+      const regSection = document.getElementById('auth-register-section');
+      const demoSection = document.getElementById('auth-demo-section');
+      const tabLogin = document.getElementById('btn-tab-login');
+      const tabRegister = document.getElementById('btn-tab-register');
+
+      if (mode === 'register') {
+        if (loginSection) loginSection.classList.add('hidden');
+        if (demoSection) demoSection.classList.add('hidden');
+        if (regSection) {
+          regSection.classList.remove('hidden');
+          regSection.classList.remove('animate-view-enter');
+          void regSection.offsetWidth;
+          regSection.classList.add('animate-view-enter');
+        }
+        if (tabLogin) {
+          tabLogin.className = 'flex-1 py-2 rounded-xl text-xs font-medium transition-all text-slate-500 hover:text-slate-800 flex items-center justify-center gap-1.5';
+        }
+        if (tabRegister) {
+          tabRegister.className = 'flex-1 py-2 rounded-xl text-xs font-bold transition-all bg-white text-emerald-800 shadow-xs flex items-center justify-center gap-1.5';
+        }
       } else {
-        form.classList.add('hidden');
-        text.innerText = "Don't have an account? Register Here";
-        icon.innerText = '▾';
+        if (regSection) regSection.classList.add('hidden');
+        if (loginSection) {
+          loginSection.classList.remove('hidden');
+          loginSection.classList.remove('animate-view-enter');
+          void loginSection.offsetWidth;
+          loginSection.classList.add('animate-view-enter');
+        }
+        if (demoSection) demoSection.classList.remove('hidden');
+        if (tabLogin) {
+          tabLogin.className = 'flex-1 py-2 rounded-xl text-xs font-bold transition-all bg-white text-emerald-800 shadow-xs flex items-center justify-center gap-1.5';
+        }
+        if (tabRegister) {
+          tabRegister.className = 'flex-1 py-2 rounded-xl text-xs font-medium transition-all text-slate-500 hover:text-slate-800 flex items-center justify-center gap-1.5';
+        }
       }
     }
 
-    // Demo Accounts Quick Fill
+    // Alias for backward compatibility
+    function toggleRegisterSection() {
+      const regSection = document.getElementById('auth-register-section');
+      if (regSection && !regSection.classList.contains('hidden')) {
+        setAuthMode('login');
+      } else {
+        setAuthMode('register');
+      }
+    }
+
     function fillDemo(role) {
       const idInput = document.getElementById('login-identifier');
       const passInput = document.getElementById('login-password');
@@ -2917,10 +3080,12 @@
       const cfg = activeOtpPayload;
       if (cfg.action === 'REGISTER_USER') {
         const res = await dbService('app_users', 'POST', cfg.payload);
-        await logActivity(res[0]?.id, cfg.payload.username, cfg.payload.role, 'USER_REGISTERED', 'User Management', 'SUCCESS', `New account registered as ${cfg.payload.role}`);
-        notify('Registration Complete', 'Account verified and ready. You may now log in.', 'success');
-        toggleRegisterSection();
+        const registeredId = (Array.isArray(res) && res.length > 0) ? res[0].id : null;
+        await logActivity(registeredId, cfg.payload.username, cfg.payload.role, 'USER_REGISTERED', 'User Management', 'SUCCESS', `New account registered as ${cfg.payload.role} (synced to Supabase Cloud)`);
+        notify('Registration Complete', 'Account verified and saved to Supabase! You may now sign in.', 'success');
+        setAuthMode('login');
         document.getElementById('login-identifier').value = cfg.payload.username;
+        document.getElementById('login-password').value = '';
       } else if (cfg.action === 'RESET_PASSWORD') {
         document.getElementById('forgot-step-1').classList.add('hidden');
         document.getElementById('forgot-step-2').classList.remove('hidden');
